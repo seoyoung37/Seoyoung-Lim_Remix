@@ -20,64 +20,74 @@
       font-family:'Roboto Condensed', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
     }
 
-    /* ===== HEADER (Scale01 그대로) ===== */
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 64px;
-      padding: 0 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      z-index: 1000;
-    }
+    
+/* ===== HEADER (Scale02와 동일) ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+}
 
-    nav {
-      display: flex;
-      gap: 32px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-    }
+.logo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
 
-    .menu-item { position: relative; font-size: 12px; letter-spacing: 0.08em; }
-    .menu-item > a {
-      text-decoration: none;
-      color: black;
-      padding: 8px 0;
-      display: inline-block;
-    }
+nav {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
 
-    .submenu {
-      position: absolute;
-      top: 28px;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-6px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      background: rgba(255, 255, 255, 0.1);
-      padding-top: 8px;
-    }
+.menu-item {
+  position: relative;
+}
 
-    .submenu a {
-      text-decoration: none;
-      color: black;
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-    }
+.menu-item > a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 0;
+  display: inline-block;
+}
 
-    .menu-item:hover .submenu {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
+/* SUB MENU */
+.submenu {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: white;
+  padding-top: 8px;
+}
 
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
     /* ===== CONTENT ===== */
     main{
       margin-top:64px; /* header height */
