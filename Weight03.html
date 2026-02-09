@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Summer Day</title>
+
+  <!-- Variable font (wide weight range + condensed 가능) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root{
+      /* ====== 조절 포인트(원하는 값으로 바꾸면 됨) ====== */
+      --poster-max: 800px;        /* ✅ 가운데 블록 가로폭 (강제정렬 느낌 결정) */
+      --poster-pad-x: 48px;        /* ✅ 좌우 여백 */
+      --poster-pad-y: 56px;        /* ✅ 위/아래 여백 */
+
+      --base-size: clamp(22px, 2.25vw, 42px);   /* ✅ 문단 기본 글자 크기 */
+      --base-lh: 1.08;                           /* ✅ 줄간격(빡빡하게 하고 싶으면 1.0~1.08) */
+      --tracking: -0.015em;                      /* ✅ 자간(더 빡빡하게 -0.02em 까지) */
+      --word-gap: 0.18em;                        /* ✅ 단어 사이 기본 간격 (justify 전 기본값) */
+
+      --wght-min: 140;           /* ✅ 시작 weight (더 얇게 하고 싶으면 100~120) */
+      --wght-max: 980;           /* ✅ 마지막 weight (더 두껍게 1000 근처) */
+      --wdth-min: 62;            /* ✅ 시작 폭(좁게)  */
+      --wdth-max: 92;            /* ✅ 끝 폭(조금 넓게) */
+    }
+
+    body{
+      margin: 0;
+      background: #fff;
+      color: #000;
+      overflow-x: hidden; /* ✅ 화면 폭 넘침 방지 */
+      font-family: 'Roboto Flex', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+
+    /* ===== HEADER (Scale01 그대로) ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 64px;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: black;
+      z-index: 1000;
+    }
+    nav {
+      display: flex;
+      gap: 32px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+    .menu-item { position: relative; }
+    .menu-item > a {
+      text-decoration: none;
+      color: white;
+      padding: 8px 0;
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+    .submenu {
+      position: absolute;
+      top: 28px; left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      background: rgba(255, 255, 255, 0.1);
+      padding-top: 8px;
+    }
+    .submenu a {
+      text-decoration: none;
+      color: WHITE;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .menu-item:hover .submenu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ===== FOOTER (Scale01 동일 크기 유지 + 좁아짐 방지 위해 fixed) ===== */
+    footer {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 56px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      background: black;
+      color: white;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      z-index: 1000;
+    }
+
+    /* ===== CONTENT ===== */
+    main{
+      margin-top: 64px;                  /* header만큼 */
+      padding-bottom: 56px;              /* footer만큼 */
+      min-height: calc(100vh - 64px - 56px);
+      background: #000;                  /* ✅ 요청: 배경 검정 */
+      display: flex;
+      justify-content: center;
+    }
+
+    .poster{
+      width: min(var(--poster-max), 100%);
+      padding: var(--poster-pad-y) var(--poster-pad-x);
+      color: #fff;
+    }
+
+    /* 위쪽 “DUALISM 같은” 타이틀 느낌: 얇은/두꺼운/좁은/넓은 혼합 */
+    .hero{
+      margin: 0 0 42px 0;
+      line-height: 0.9;
+      letter-spacing: -0.1em;
+      text-transform: uppercase;
+    }
+    .hero .row{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.18em;
+      margin-bottom: 10px;
+    }
+    .hero .t-tthin{
+      font-variation-settings: "opsz" 96, "wdth" 55, "wght" 50;
+      font-size: clamp(44px, 6.7vw, 118px);
+      letter-spacing: -0.03em;
+      opacity: 0.98;
+    }
+    .hero .t-thin{
+      font-variation-settings: "opsz" 96, "wdth" 55, "wght" 160;
+      font-size: clamp(44px, 6.7vw, 118px);
+      letter-spacing: -0.03em;
+      opacity: 0.98;
+    }
+    .hero .t-fat{
+      font-variation-settings: "opsz" 96, "wdth" 120, "wght" 1200;
+      font-size: clamp(44px, 6.7vw, 118px);
+      letter-spacing: -0.03em;
+    }
+    .hero .t-mmid{
+      font-variation-settings: "opsz" 96, "wdth" 85, "wght" 320;
+      font-size: clamp(44px, 6.7vw, 118px);
+      letter-spacing: -0.03em;
+    }
+
+    .hero .t-mid{
+      font-variation-settings: "opsz" 96, "wdth" 85, "wght" 600;
+      font-size: clamp(44px, 6.7vw, 118px);
+      letter-spacing: -0.03em;
+    }
+
+    /* 가운데 “빡빡한” 문단 */
+    .block{
+      margin: 0;
+      font-size: var(--base-size);
+      line-height: var(--base-lh);
+      letter-spacing: var(--tracking);
+      text-align: justify;         /* ✅ 강제정렬 */
+      text-justify: inter-word;
+      hyphens: none;
+      word-spacing: var(--word-gap);
+    }
+    /* 마지막 줄도 꽉 차게 보이게: after로 한 줄 더 만들어 justify 유도 */
+    .block::after{
+      content: "";
+      display: inline-block;
+      width: 100%;
+    }
+
+    /* 단어(span) 기본 */
+    .w{
+      display: inline;
+      white-space: nowrap;
+      font-variation-settings: "opsz" 96, "wdth" 70, "wght" 300; /* JS에서 덮어씀 */
+    }
+
+    /* 반응형에서 너무 꽉 끼면 패딩만 줄임 */
+    @media (max-width: 760px){
+      :root{
+        --poster-pad-x: 20px;
+        --poster-pad-y: 34px;
+        --word-gap: 0.12em;
+      }
+      header, footer{ padding: 0 18px; }
+      nav{ gap: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="menu-item"><a href="Home.html">Home</a></div>
+    <nav>
+      <div class="menu-item">
+        <a href="#">SCALE</a>
+        <div class="submenu">
+          <a href="Scale01.html">Scale 01</a>
+          <a href="Scale02.html">Scale 02</a>
+          <a href="Scale03.html">Scale 03</a>
+          <a href="Scale04.html">Scale 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">REPETITION</a>
+        <div class="submenu">
+          <a href="Repetition01.html">Repetition 01</a>
+          <a href="Repetition02.html">Repetition 02</a>
+          <a href="Repetition03.html">Repetition 03</a>
+          <a href="Repetition04.html">Repetition 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">WEIGHT</a>
+        <div class="submenu">
+          <a href="Weight01.html">Weight 01</a>
+          <a href="Weight02.html">Weight 02</a>
+          <a href="Weight03.html">Weight 03</a>
+          <a href="Weight04.html">Weight 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">FOCUS</a>
+        <div class="submenu">
+          <a href="Focus01.html">Focus 01</a>
+          <a href="Focus02.html">Focus 02</a>
+          <a href="Focus03.html">Focus 03</a>
+          <a href="Focus04.html">Focus 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">ROTATION</a>
+        <div class="submenu">
+        <a href="Rotation01.html">Rotation 01</a>
+        <a href="Rotation02.html">Rotation 02</a>
+        <a href="Rotation03.html">Rotation 03</a>
+        <a href="Rotation04.html">Rotation 04</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== CONTENT ===== -->
+  <main>
+    <section class="poster" aria-label="Weight poster">
+      <!-- 위에 확대 캡처처럼 “얇/두/좁/넓” 믹스 -->
+      <h1 class="hero" aria-label="headline">
+        <div class="row">
+          <span class="t-thin">W</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">O</span>
+          <span class="t-fat">MA</span>
+          <span class="t-mid">D</span>
+          <span class="t-fat">E</span>
+          <span class="t-thin">THE</span>
+          <span class="t-fat">WORLD?</span>
+
+          <span class="t-thin">WHO</span>
+          <span class="t-tthin">MA</span>
+          <span class="t-fat">D</span>
+          <span class="t-mid">E</span>
+
+          <span class="t-thin">T</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">E</span>
+          <span class="t-fat">SWA</span>
+          <span class="t-mid">N,</span>
+          <span class="t-fat">AN</span>
+          <span class="t-thin">D</span>
+          <span class="t-fat">THE</span>
+
+          <span class="t-thin">B</span>
+          <span class="t-mmid">LA</span>
+          <span class="t-fat">CK</span>
+          <span class="t-mid">BE</span>
+          <span class="t-fat">A</span>
+          <span class="t-mid">R</span>
+          <span class="t-fat">?</span>
+          <span class="t-thin">THEWO</span>
+          <span class="t-fat">RLD?</span>
+
+          <span class="t-thin">W</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">O</span>
+          <span class="t-thin">MA</span>
+          <span class="t-fat">D</span>
+          <span class="t-mid">E</span>
+
+          <span class="t-thin">T</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">E</span>
+          <span class="t-fat">GRA</span>
+          <span class="t-mid">SS</span>
+          <span class="t-mmid">H</span>
+          <span class="t-thin">OPPER?</span>
+          <span class="t-fat">T</span>
+          <span class="t-tthin">E</span>
+          <span class="t-mid">LL</span>
+          <span class="t-thin">ME</span>
+          <span class="t-fat">,</span>
+
+          <span class="t-thin">W</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">A</span>
+          <span class="t-mid">T</span>
+          <span class="t-thin">ELSE</span>
+          <span class="t-fat">SH</span>
+          <span class="t-mid">OULD</span>
+          <span class="t-fat">I</span>
+          <span class="t-mid">H</span>
+          <span class="t-tthin">A</span>
+          <span class="t-mmid">V</span>
+          <span class="t-tthin">E</span>
+
+
+
+
+
+
+
+
+          <span class="t-thin">D</span>
+          <span class="t-fat">O</span>
+          <span class="t-mid">N</span>
+          <span class="t-fat">E?</span>
+          <span class="t-mid">D</span>
+          <span class="t-fat">O</span>
+          <span class="t-thin">ESN</span>
+          <span class="t-fat">'TE</span>
+
+          <span class="t-thin">VER</span>
+          <span class="t-tthin">RY</span>
+          <span class="t-fat">T</span>
+          <span class="t-mid">H</span>
+
+          <span class="t-thin">I</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">N</span>
+          <span class="t-fat">GDI</span>
+          <span class="t-mid">EA</span>
+          <span class="t-fat">T</span>
+          <span class="t-thin">L</span>
+          <span class="t-fat">AST</span>
+
+          <span class="t-thin">,</span>
+          <span class="t-mmid">AN</span>
+          <span class="t-fat">DT</span>
+          <span class="t-mid">OO</span>
+          <span class="t-fat">S</span>
+          <span class="t-mid">O</span>
+          <span class="t-fat">O</span>
+          <span class="t-thin">N?TEL</span>
+          <span class="t-fat">LME,</span>
+
+          <span class="t-thin">W</span>
+          <span class="t-fat">H</span>
+          <span class="t-mid">A</span>
+          <span class="t-thin">TI</span>
+          <span class="t-fat">S</span>
+          <span class="t-mid">I</span>
+
+          <span class="t-thin">T</span>
+          <span class="t-fat">Y</span>
+          <span class="t-mid">O</span>
+          <span class="t-fat">UPL</span>
+          <span class="t-mid">AN</span>
+          <span class="t-mmid">T</span>
+          <span class="t-thin">ODOWIT</span>
+          <span class="t-fat">H</span>
+          <span class="t-tthin">Y</span>
+          <span class="t-mid">OU</span>
+          <span class="t-thin">RO</span>
+          <span class="t-fat">N</span>
+
+          <span class="t-thin">E</span>
+          <span class="t-fat">W</span>
+          <span class="t-mid">I</span>
+          <span class="t-mid">L</span>
+          <span class="t-thin">DAND</span>
+          <span class="t-fat">PRES</span>
+          <span class="t-fat">IOUS</span>
+
+          <span class="t-mid">LI</span>
+          <span class="t-fat">F</span>
+          <span class="t-mid">E</span>
+          <span class="t-fat">?</span>
+
+        </div>
+      </h1>
+
+      <!-- 가운데: 단어가 빡빡하게(강제정렬) 들어가는 본문 -->
+      <p id="block" class="block"></p>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+
+  <script>
+
+    // ====== 단어별로 weight/width(압축폭) 점진 증가 ======
+    const el = document.getElementById("block");
+
+    // 공백/줄바꿈 정리 (문단으로 흘려서 max-width 안에서 자동 줄바꿈)
+    const normalized = text.replace(/\s+/g, " ").trim();
+
+    // 단어 토큰화 (구두점 포함 단어 단위)
+    const words = normalized.split(" ");
+
+    // CSS 변수 값 읽기
+    const css = getComputedStyle(document.documentElement);
+    const wMin = parseFloat(css.getPropertyValue("--wght-min")) || 140;
+    const wMax = parseFloat(css.getPropertyValue("--wght-max")) || 980;
+    const dMin = parseFloat(css.getPropertyValue("--wdth-min")) || 62;
+    const dMax = parseFloat(css.getPropertyValue("--wdth-max")) || 92;
+
+    // easing (초반 더 얇고 후반 확 두꺼운 느낌)
+    const easeIn = (t) => t*t*t; // 0~1
+
+    words.forEach((word, i) => {
+      const t = (words.length <= 1) ? 1 : i / (words.length - 1);
+      const e = easeIn(t);
+
+      // 점진적으로 wght/wdth 증가
+      const wght = Math.round(wMin + (wMax - wMin) * e);
+      const wdth = Math.round(dMin + (dMax - dMin) * e);
+
+      const span = document.createElement("span");
+      span.className = "w";
+      span.textContent = word;
+
+      // stroke 없음! (오직 weight/width로만)
+      span.style.fontVariationSettings = `"opsz" 96, "wdth" ${wdth}, "wght" ${wght}`;
+
+      el.appendChild(span);
+
+      // 단어 사이 공백은 text node로 (justify가 공간 늘릴 수 있게)
+      if (i !== words.length - 1) el.appendChild(document.createTextNode(" "));
+    });
+
+    // ====== 화면 폭 넘침(가끔 생기는) 예방: 리사이즈 때 글자 spacing 미세 보정 ======
+    // 필요하면 여기서 letter-spacing/word-spacing도 동적으로 조절 가능.
+  </script>
+</body>
+</html>

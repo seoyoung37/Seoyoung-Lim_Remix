@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Summer Day</title>
+
+  <!-- Condensed + Bold fallback (Yoon 머리정체 느낌 대체) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
+      background:#fff;
+      color:#000;
+      font-family:'Roboto Condensed', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+
+    /* ===== HEADER (Scale01 그대로) ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 64px;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-item { position: relative; font-size: 12px; letter-spacing: 0.08em; }
+    .menu-item > a {
+      text-decoration: none;
+      color: black;
+      padding: 8px 0;
+      display: inline-block;
+    }
+
+    .submenu {
+      position: absolute;
+      top: 28px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      background: rgba(255, 255, 255, 0.1);
+      padding-top: 8px;
+    }
+
+    .submenu a {
+      text-decoration: none;
+      color: black;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .menu-item:hover .submenu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ===== CONTENT ===== */
+    main{
+      margin-top:64px; /* header height */
+      padding: 28px 0 40px;
+    }
+
+    /* “포스터”처럼 중앙에 한 장 */
+    .wrap{
+      width:100%;
+      display:flex;
+      justify-content:center;
+    }
+    .poster{
+      width:min(1120px, 92vw);
+      padding: 10px 0;
+    }
+
+    /* 5줄 세로 스택 */
+    .lines{
+      display:flex;
+      flex-direction:column;
+      gap: 28px; /* 줄 간격 */
+      padding: 14px 0;
+    }
+
+    /* 한 줄 */
+    .line{
+      display:flex;
+      flex-wrap: wrap;          /* 화면 좁으면 자연스럽게 줄바꿈 */
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    /* 단어 블럭 */
+    .w{
+      position:relative;
+      display:inline-flex;
+      align-items:flex-end;
+      justify-content:center;
+
+      background:#000;
+      color:#fff;
+
+      padding: 18px 18px 16px;
+      min-width: 64px;
+
+      /* 크기/높이 커스터마이즈 */
+      height: var(--h, 120px);
+      font-size: var(--fs, 92px);
+      line-height: 0.85;
+
+      letter-spacing: -0.02em;
+      font-family: 'Anton', 'Impact', 'Haettenschweiler', 'Roboto Condensed', sans-serif;
+
+      /* 박스 느낌 */
+      border-radius: 0;
+    }
+
+
+    /* 줄마다 “리듬” 다르게 (이미지처럼 계단형) */
+    .l1 .w:nth-child(1){ --h:280px; --fs:300px; }
+    .l1 .w:nth-child(2){ --h:130px; --fs:110px; }
+    .l1 .w:nth-child(3){ --h:150px; --fs:120px; }
+    .l1 .w:nth-child(4){ --h:120px; --fs:96px; }
+
+    .l2 .w:nth-child(1){ --h:120px; --fs:92px; }
+    .l2 .w:nth-child(2){ --h:300px; --fs:270px; }
+    .l2 .w:nth-child(3){ --h:140px; --fs:115px; }
+    .l2 .w:nth-child(4){ --h:170px; --fs:140px; }
+    .l2 .w:nth-child(5){ --h:120px; --fs:96px; }
+    .l2 .w:nth-child(6){ --h:140px; --fs:115px; }
+    .l2 .w:nth-child(7){ --h:200px; --fs:165px; }
+    .l2 .w:nth-child(8){ --h:140px; --fs:115px; }
+    .l2 .w:nth-child(9){ --h:160px; --fs:130px; }
+
+    .l3 .w:nth-child(1){ --h:160px; --fs:130px; }
+    .l3 .w:nth-child(2){ --h:130px; --fs:110px; }
+    .l3 .w:nth-child(3){ --h:210px; --fs:170px; }
+
+    .l4 .w:nth-child(1){ --h:140px; --fs:115px; }
+    .l4 .w:nth-child(2){ --h:220px; --fs:180px; }
+    .l4 .w:nth-child(3){ --h:400px; --fs:250px; }
+    .l4 .w:nth-child(4){ --h:150px; --fs:120px; }
+    .l4 .w:nth-child(5){ --h:120px; --fs:96px; }
+    .l4 .w:nth-child(6){ --h:180px; --fs:150px; }
+    .l4 .w:nth-child(7){ --h:140px; --fs:115px; }
+
+    .l5 .w:nth-child(1){ --h:150px; --fs:120px; }
+    .l5 .w:nth-child(2){ --h:130px; --fs:110px; }
+    .l5 .w:nth-child(3){ --h:160px; --fs:130px; }
+    .l5 .w:nth-child(4){ --h:130px; --fs:110px; }
+    .l5 .w:nth-child(5){ --h:210px; --fs:170px; }
+    .l5 .w:nth-child(6){ --h:140px; --fs:115px; }
+    .l5 .w:nth-child(7){ --h:200px; --fs:165px; }
+    .l5 .w:nth-child(8){ --h:140px; --fs:115px; }
+    .l5 .w:nth-child(9){ --h:160px; --fs:130px; }
+    .l5 .w:nth-child(10){ --h:140px; --fs:115px; }
+    .l5 .w:nth-child(11){ --h:220px; --fs:180px; }
+    .l5 .w:nth-child(12){ --h:140px; --fs:115px; }
+    .l5 .w:nth-child(13){ --h:200px; --fs:165px; }
+    .l5 .w:nth-child(14){ --h:350px; --fs:280px; }
+    .l5 .w:nth-child(15){ --h:230px; --fs:190px; }
+    .l5 .w:nth-child(16){ --h:150px; --fs:120px; }
+    .l5 .w:nth-child(17){ --h:130px; --fs:110px; }
+    .l5 .w:nth-child(18){ --h:160px; --fs:130px; }
+    .l5 .w:nth-child(19){ --h:130px; --fs:110px; }
+    .l5 .w:nth-child(20){ --h:210px; --fs:170px; }
+    .l5 .w:nth-child(21){ --h:140px; --fs:115px; }
+    .l5 .w:nth-child(22){ --h:200px; --fs:165px; }
+    .l5 .w:nth-child(23){ --h:140px; --fs:115px; }
+    .l5 .w:nth-child(24){ --h:160px; --fs:130px; }
+ 
+
+    /* 반응형: 화면 좁으면 전체 크기 살짝 다운 */
+    @media (max-width: 980px){
+      header{ padding:0 18px; }
+      footer{ padding:0 18px; }
+      .w{ padding: 14px 14px 12px; }
+      .lines{ gap: 22px; }
+    }
+    @media (max-width: 760px){
+      .w{ font-size: calc(var(--fs, 92px) * 0.78); height: calc(var(--h, 120px) * 0.78); }
+      .w[data-tag]::before{ font-size: 11px; }
+    }
+
+    /* ===== FOOTER (Scale01 그대로) ===== */
+    footer {
+      height: 56px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="menu-item"><a href="Home.html">Home</a></div>
+    <nav>
+      <div class="menu-item">
+        <a href="#">SCALE</a>
+        <div class="submenu">
+          <a href="Scale01.html">Scale 01</a>
+          <a href="Scale02.html">Scale 02</a>
+          <a href="Scale03.html">Scale 03</a>
+          <a href="Scale04.html">Scale 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">REPETITION</a>
+        <div class="submenu">
+          <a href="Repetition01.html">Repetition 01</a>
+          <a href="Repetition02.html">Repetition 02</a>
+          <a href="Repetition03.html">Repetition 03</a>
+          <a href="Repetition04.html">Repetition 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">WEIGHT</a>
+        <div class="submenu">
+          <a href="Weight01.html">Weight 01</a>
+          <a href="Weight02.html">Weight 02</a>
+          <a href="Weight03.html">Weight 03</a>
+          <a href="Weight04.html">Weight 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">FOCUS</a>
+        <div class="submenu">
+          <a href="Focus01.html">Focus 01</a>
+          <a href="Focus02.html">Focus 02</a>
+          <a href="Focus03.html">Focus 03</a>
+          <a href="Focus04.html">Focus 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">ROTATION</a>
+        <div class="submenu">
+        <a href="Rotation01.html">Rotation 01</a>
+        <a href="Rotation02.html">Rotation 02</a>
+        <a href="Rotation03.html">Rotation 03</a>
+        <a href="Rotation04.html">Rotation 04</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== CONTENT ===== -->
+  <main>
+    <div class="wrap">
+      <section class="poster">
+        <div class="lines">
+
+          <!-- 1 / 5 -->
+          <div class="line l1">
+            <span class="w" data-tag="00:01">WHO</span>
+            <span class="w" data-tag="17.1">MADE</span>
+            <span class="w" data-tag="103 FM">THE</span>
+            <span class="w" data-tag="22:00">WORLD?</span>
+          </div>
+
+          <!-- 2 / 5 -->
+          <div class="line l2">
+            <span class="w" data-tag="00:04">WHO</span>
+            <span class="w" data-tag="DUBERMAN">MADE</span>
+            <span class="w" data-tag="17.1">THE</span>
+            <span class="w" data-tag="103 FM">SWAN,</span>
+            <span class="w" data-tag="22:00">AND</span>
+            <span class="w" data-tag="00:07">THE</span>
+            <span class="w" data-tag="17.1">BLACK</span>
+            <span class="w" data-tag="103 FM">BEAR?</span>
+          </div>
+
+          <!-- 3 / 5 -->
+          <div class="line l3">
+            <span class="w" data-tag="00:10">WHO</span>
+            <span class="w" data-tag="17.1">MADE</span>
+            <span class="w" data-tag="103 FM">THE</span>
+            <span class="w" data-tag="22:00">GRASSHOPPER?</span>
+          </div>
+
+          <!-- 4 / 5 -->
+          <div class="line l4">
+            <span class="w" data-tag="00:12">TELL</span>
+            <span class="w" data-tag="17.1">ME,</span>
+            <span class="w" data-tag="103 FM">WHAT</span>
+            <span class="w" data-tag="22:00">ELSE</span>
+            <span class="w" data-tag="00:14">SHOULD</span>
+            <span class="w" data-tag="17.1">I</span>
+            <span class="w" data-tag="103 FM">HAVE</span>
+            <span class="w" data-tag="22:00">DONE?</span>
+          </div>
+
+          <!-- 5 / 5 (긴 문장 한 줄) -->
+          <div class="line l5">
+            <span class="w" >DOESN'T</span>
+            <span class="w" >EVERYTHING</span>
+            <span class="w" >DIE</span>
+            <span class="w" >AT</span>
+            <span class="w" data-tag="00:17">LAST,</span>
+            <span class="w" data-tag="17.1">AND</span>
+            <span class="w" data-tag="103 FM">TOO</span>
+            <span class="w" data-tag="22:00">SOON?</span>
+            <span class="w" data-tag="00:19">TELL</span>
+            <span class="w" data-tag="17.1">ME,</span>
+            <span class="w" data-tag="103 FM">WHAT</span>
+            <span class="w" data-tag="22:00">IS</span>
+            <span class="w" data-tag="00:20">IT</span>
+            <span class="w" data-tag="17.1">YOU</span>
+            <span class="w" data-tag="103 FM">PLAN</span>
+            <span class="w" data-tag="22:00">TO</span>
+            <span class="w" data-tag="00:21">DO</span>
+            <span class="w" data-tag="17.1">WITH</span>
+            <span class="w" data-tag="103 FM">YOUR</span>
+            <span class="w" data-tag="22:00">ONE</span>
+            <span class="w" data-tag="00:22">WILD</span>
+            <span class="w" data-tag="17.1">AND</span>
+            <span class="w" data-tag="103 FM">PRECIOUS</span>
+            <span class="w" data-tag="22:23">LIFE?</span>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER (Scale01 그대로) ===== -->
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+</body>
+</html>

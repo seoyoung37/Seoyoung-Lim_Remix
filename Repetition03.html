@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Summer Day</title>
+
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item > a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 0;
+  display: inline-block;
+}
+
+/* ===== SUB MENU ===== */
+.submenu {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  padding-top: 8px;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ===== MAIN ===== */
+main {
+  margin-top: 64px; /* header 만큼만 ↓ */
+}
+
+/* 2×2 GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100vw;
+  height: calc(100vh - 64px - 56px); /* header + footer 제외 */
+}
+
+/* 각 사분면 */
+.cell {
+  position: relative;
+  overflow: hidden;
+  background: white;
+}
+
+/* 반복 텍스트 */
+.pattern {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 48px;
+  font-weight: 300;
+  color: black;
+  opacity: 0.9;
+  line-height: 1.1;
+}
+
+.pattern span {
+  display: block;
+}
+
+/* ───────── 사분면 위치 (원본 그대로) ───────── */
+
+/* 좌상 */
+.tl .pattern {
+  top: -5%;
+  left: -2%;
+  transform: rotate(0deg);
+}
+
+/* 우상 */
+.tr .pattern {
+  top: -27%;
+  left: 15%;
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+
+/* 좌하 */
+.bl .pattern {
+  top: -70%;
+  left: 10%;
+  transform: rotate(-90deg);
+}
+
+/* 우하 */
+.br .pattern {
+  top: 0%;
+  left: -30%;
+  transform: rotate(180deg);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  height: 56px;                /* 👈 고정 */
+  padding: 0 40px;             /* 위아래 padding 제거 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  border-top: 1px solid rgba(0,0,0,0.05);
+position: fixed;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="menu-item"><a href="Home.html">Home</a></div>
+  <nav>
+    <div class="menu-item">
+      <a href="#">SCALE</a>
+      <div class="submenu">
+        <a href="Scale01.html">Scale 01</a>
+        <a href="Scale02.html">Scale 02</a>
+        <a href="Scale03.html">Scale 03</a>
+        <a href="Scale04.html">Scale 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">REPETITION</a>
+      <div class="submenu">
+        <a href="Repetition01.html">Repetition 01</a>
+        <a href="Repetition02.html">Repetition 02</a>
+        <a href="Repetition03.html">Repetition 03</a>
+        <a href="Repetition04.html">Repetition 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">WEIGHT</a>
+      <div class="submenu">
+        <a href="Weight01.html">Weight 01</a>
+        <a href="Weight02.html">Weight 02</a>
+        <a href="Weight03.html">Weight 03</a>
+        <a href="Weight04.html">Weight 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">FOCUS</a>
+      <div class="submenu">
+        <a href="Focus01.html">Focus 01</a>
+        <a href="Focus02.html">Focus 02</a>
+        <a href="Focus03.html">Focus 03</a>
+        <a href="Focus04.html">Focus 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">ROTATION</a>
+      <div class="submenu">
+      <a href="Rotation01.html">Rotation 01</a>
+      <a href="Rotation02.html">Rotation 02</a>
+      <a href="Rotation03.html">Rotation 03</a>
+      <a href="Rotation04.html">Rotation 04</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main>
+  <div class="grid">
+
+    <div class="cell tl">
+      <div class="pattern">
+        <span>Who made the world? Who made the swan,</span>
+      <span>and the black bear? Who made the grasshopper?</span>
+      <span>Tell me, what else should I have done? Doesn't</span>
+      <span>everything die at last, and too soon? Tell me, </span>
+      <span>what is it you plan to do with your one wild a</span>
+      <span>nd precious life? Who made the world? Who </span>
+      <span>made the swan, and the black bear? Who m</span>
+      <span>ade the grasshopper? Tell me, what else should</span>
+      <span>  I have done? Doesn't everything die at last,and too soon?</span>
+      </div>
+    </div>
+
+    <div class="cell tr">
+      <div class="pattern">
+        <span>Who made the world?</span>
+        <span>Who made the swan,and</span>
+        <span>and the black bear? W</span>
+        <span>ho made the grasshopper?</span>
+        <span>Tell me, what else should </span>
+        <span>Who made the swan,and</span>
+        <span>I have done? Doesn't e</span>
+        <span>everything die at last, a</span>
+        <span>and too soon? Tell me,</span>
+        <span>what is it you plan to do</span>
+        <span>do with your one wild a</span>
+        <span>nd precious life? Who made</span>
+        <span>the world? Who made the swan,</span>
+        <span>and the black bear? Who m</span>
+        <span>ho made the grasshopper?</span>
+        <span>Tell me, what else should </span>
+        <span>Who made the swan,and</span>
+      </div>
+    </div>
+
+    <div class="cell bl">
+      <div class="pattern">
+        <span>Who made the world?</span>
+        <span>Who made the swan,and</span>
+        <span>and the black bear? W</span>
+        <span>ho made the grasshopper?</span>
+        <span>Tell me, what else should </span>
+        <span>Who made the swan,and</span>
+        <span>I have done? Doesn't e</span>
+        <span>everything die at last, a</span>
+        <span>and too soon? Tell me,</span>
+        <span>what is it you plan to do</span>
+        <span>do with your one wild a</span>
+        <span>nd precious life? Who made</span>
+        <span>the world? Who made the swan,</span>
+        <span>and the black bear? Who m</span>
+        <span>ho made the grasshopper?</span>
+        <span>Tell me, what else should </span>
+        <span>Who made the swan,and</span>
+      </div>
+    </div>
+
+    <div class="cell br">
+      <div class="pattern">
+        <span>Who made the world? Who made the swan,</span>
+            <span>and the black bear? Who made the grasshopper?</span>
+            <span>Tell me, what else should I have done? Doesn't</span>
+            <span>everything die at last, and too soon? Tell me, </span>
+            <span>what is it you plan to do with your one wild a</span>
+            <span>nd precious life? Who made the world? Who </span>
+            <span>made the swan, and the black bear? Who m</span>
+            <span>ade the grasshopper? Tell me, what else should</span>
+            <span>  I have done? Doesn't everything die at last,and too soon?</span>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div>2026 Spring Data as Material</div>
+  <div>Seoyoung Lim</div>
+</footer>
+
+</body>
+</html>

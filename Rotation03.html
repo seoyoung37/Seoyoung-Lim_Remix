@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The Summer Day</title>
+
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    /* ===== RESET & BASIC SETUP ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #ffffff;
+      color: black;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Pretendard', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER & FOOTER (기존 동일) ===== */
+     /* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item > a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 0;
+  display: inline-block;
+}
+
+/* ===== SUB MENU ===== */
+.submenu {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  padding-top: 8px;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+footer {
+      height: 56px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    
+
+    /* ===== ARTWORK STAGE (DOMINO AREA) ===== */
+    .art-stage {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0; /* 상하 여백 */
+      overflow: hidden;
+      /* 입체감을 위한 원근 설정 */
+      perspective: 1200px; 
+    }
+
+    /* 각 줄 (Row) 스타일 */
+    .domino-row {
+      flex: 1; /* 높이 균등 분할 */
+      display: flex;
+      align-items: flex-end; /* 바닥 정렬 */
+      padding-left: 40px; /* 시작 위치 여백 */
+      overflow: visible; /* 회전해서 영역 밖으로 나가는 것 허용 */
+      white-space: nowrap;
+      
+      /* 글자들이 서로 포개지도록 음수 간격 설정 */
+      letter-spacing: -1em; 
+      
+      /* 3D 공간 유지 */
+      transform-style: preserve-3d;
+    }
+
+    .domino-row:last-child { border-bottom: none; }
+
+
+    .char {
+      display: inline-block;
+      font-weight: 300; /* 가장 굵게 (Black) */
+      line-height: 0.8;
+      text-transform: uppercase;
+      
+      transform-origin: 0% 100%; 
+      
+      position: relative;
+      will-change: transform;
+      
+    
+    }
+
+    .spacer { display: inline-block; width: 1vw; }
+  </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="menu-item"><a href="Home.html">Home</a></div>
+        <nav>
+          <div class="menu-item">
+            <a href="#">SCALE</a>
+            <div class="submenu">
+              <a href="Scale01.html">Scale 01</a>
+              <a href="Scale02.html">Scale 02</a>
+              <a href="Scale03.html">Scale 03</a>
+              <a href="Scale04.html">Scale 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">REPETITION</a>
+            <div class="submenu">
+              <a href="Repetition01.html">Repetition 01</a>
+              <a href="Repetition02.html">Repetition 02</a>
+              <a href="Repetition03.html">Repetition 03</a>
+              <a href="Repetition04.html">Repetition 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">WEIGHT</a>
+            <div class="submenu">
+              <a href="Weight01.html">Weight 01</a>
+              <a href="Weight02.html">Weight 02</a>
+              <a href="Weight03.html">Weight 03</a>
+              <a href="Weight04.html">Weight 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">FOCUS</a>
+            <div class="submenu">
+              <a href="Focus01.html">Focus 01</a>
+              <a href="Focus02.html">Focus 02</a>
+              <a href="Focus03.html">Focus 03</a>
+              <a href="Focus04.html">Focus 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">ROTATION</a>
+            <div class="submenu">
+              <a href="Rotation01.html">Rotation 01</a>
+              <a href="Rotation02.html">Rotation 02</a>
+              <a href="Rotation03.html">Rotation 03</a>
+              <a href="Rotation04.html">Rotation 04</a>
+            </div>
+          </div>
+        </nav>
+    </header>
+    
+
+  <div class="art-stage" id="artStage"></div>
+
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+
+<script>
+  function createDominoPattern() {
+    const container = document.getElementById('artStage');
+    container.innerHTML = '';
+
+    const lines = [
+      "Who made the world?",
+      "Who made the swan, and the black bear?",
+      "Who made the grasshopper?",
+      "Tell me, what else should I have done?",
+      "Doesn't everything die at last, and too soon?",
+      "Tell me, what is it you plan to do with your one wild and precious life?"
+    ];
+
+    lines.forEach((lineText, lineIndex) => {
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'domino-row';
+      
+      // 폰트 크기 계산
+      let baseFontSizeVh = (100 / lines.length) * 0.5;
+      let fontSizeVh = baseFontSizeVh;
+      
+      const chars = lineText.split('');
+      const totalChars = chars.length;
+      
+      chars.forEach((char, charIndex) => {
+        if (char === ' ') {
+          rowDiv.appendChild(document.createElement('span')).className = 'spacer';
+        } else {
+          const span = document.createElement('span');
+          span.innerText = char;
+          span.className = 'char';
+          span.style.fontSize = `${fontSizeVh}vh`;
+          
+          // ===== 도미노 회전 효과 핵심 로직 =====
+          
+          // 1. z-index: 앞 글자가 뒤를 덮도록 (인덱스 역순)
+          span.style.zIndex = totalChars - charIndex;
+
+          // 2. 진행률 (0.0 ~ 1.0): 뒤로 갈수록 1에 가까워짐
+          const progress = charIndex / (totalChars - 1);
+          
+          // 3. 회전 각도 (Rotate) 계산
+          // 시작은 거의 서 있고(-5도), 끝으로 갈수록 많이 누움(-75도)
+          // Math.pow를 사용해 뒤로 갈수록 급격하게 쓰러지도록 곡선 적용
+          let baseRotate = 0 + (Math.pow(progress, 1.5) * -70);
+          
+          // 랜덤성 추가: 각도가 불규칙하게 흔들림
+          const randomRotate = (Math.random() * 10) - 5; 
+          let finalRotate = baseRotate + randomRotate;
+
+          // 4. 수직 위치 (TranslateY) 조정
+          // 회전하며 쓰러질 때 바닥으로 살짝 꺼지는 느낌 보정 + 랜덤 들썩임
+          const translateY = (progress * 15) + (Math.random() * 5);
+
+          // 5. 스케일 (Scale)
+          // 가로로 좁혀 블록 느낌 + 약간의 랜덤 크기 변화
+          const scaleX = 0.65 + (Math.random() * 0.1);
+          const scaleY = 1.0 + (Math.random() * 0.05); // 높이도 살짝 다르게
+
+          // 6. 최종 변형 적용
+          span.style.transform = `
+            translateY(${translateY}px)
+            rotate(${finalRotate}deg) 
+            scale(${scaleX}, ${scaleY})
+          `;
+          
+          rowDiv.appendChild(span);
+        }
+      });
+
+      container.appendChild(rowDiv);
+    });
+  }
+
+  createDominoPattern();
+  window.addEventListener('resize', _.debounce(createDominoPattern, 200)); // 리사이즈 최적화 (lodash 필요, 없으면 그냥 호출)
+  // window.addEventListener('resize', createDominoPattern); // lodash 없을 경우
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+</body>
+</html>

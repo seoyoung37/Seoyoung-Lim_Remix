@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The Summer Day</title>
+
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: white;
+      color: black;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Pretendard', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER (그대로) ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    z-index: 1000;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item {
+    position: relative;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item > a {
+    text-decoration: none;
+    color: black;
+    padding: 8px 0;
+    display: inline-block;
+  }
+
+  .submenu {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    background: white;
+    padding-top: 8px;
+  }
+
+  .submenu a {
+    text-decoration: none;
+    color: black;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+    /* ===== ARTWORK STAGE (GRID BLOCK) ===== */
+    .art-stage {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px; /* 화면 가장자리 여백 */
+      padding-top: 100px;
+      overflow: hidden;
+    }
+
+    .typo-grid {
+      /* 정사각형 형태 유지를 위해 aspect-ratio 사용 가능하지만, 
+         화면에 꽉 채우기 위해 width/height를 JS로 제어하거나 flex로 처리 */
+      display: grid;
+      /* 컬럼 개수는 JS에서 계산하여 넣을 예정 */
+      width: 100%;
+      height: 100%;
+      
+      /* 중앙 정렬을 위해 최대 크기 제한 (선택사항) */
+      max-width: 1200px; 
+      
+      border: 4px solid white; /* 전체 테두리 */
+      gap: 0; /* 셀 간격 없음 */
+      background: white; /* 격자 선 색상 역할 */
+    }
+
+    .grid-cell {
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid white; /* 각 셀 테두리 */
+      
+      /* 테두리 겹침 방지 */
+      margin-right: -1px;
+      margin-bottom: -1px;
+    }
+
+    .char {
+      display: block;
+      font-weight: 900; /* 가장 굵게 */
+      line-height: 1;
+      
+      /* 반응형 폰트 사이즈 (뷰포트 기준) */
+      font-size: 4vw; 
+      
+      /* 회전 시 중심축 */
+      transform-origin: center center;
+    }
+
+    /* ===== FOOTER (기존 유지) ===== */
+    footer {
+    height: 56px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    background:#fff; /* ✅ 혹시 모를 비침 방지 */
+  }
+  </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="menu-item"><a href="Home.html">Home</a></div>
+        <nav>
+          <div class="menu-item">
+            <a href="#">SCALE</a>
+            <div class="submenu">
+              <a href="Scale01.html">Scale 01</a>
+              <a href="Scale02.html">Scale 02</a>
+              <a href="Scale03.html">Scale 03</a>
+              <a href="Scale04.html">Scale 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">REPETITION</a>
+            <div class="submenu">
+              <a href="Repetition01.html">Repetition 01</a>
+              <a href="Repetition02.html">Repetition 02</a>
+              <a href="Repetition03.html">Repetition 03</a>
+              <a href="Repetition04.html">Repetition 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">WEIGHT</a>
+            <div class="submenu">
+              <a href="Weight01.html">Weight 01</a>
+              <a href="Weight02.html">Weight 02</a>
+              <a href="Weight03.html">Weight 03</a>
+              <a href="Weight04.html">Weight 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">FOCUS</a>
+            <div class="submenu">
+              <a href="Focus01.html">Foucs 01</a>
+              <a href="Focus02.html">Foucs 02</a>
+              <a href="Focus03.html">Foucs 03</a>
+              <a href="Focus04.html">Foucs 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">ROTATION</a>
+            <div class="submenu">
+            <a href="Rotation01.html">Rotation 01</a>
+            <a href="Rotation02.html">Rotation 02</a>
+            <a href="Rotation03.html">Rotation 03</a>
+            <a href="Rotation04.html">Rotation 04</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+  <div class="art-stage">
+    <div class="typo-grid" id="typoGrid">
+      </div>
+  </div>
+
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+
+<script>
+  function createTypoGrid() {
+    const container = document.getElementById('typoGrid');
+    container.innerHTML = ''; // 초기화
+
+    const rawText = `Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?`;
+    
+
+    const cleanText = rawText.replace(/[^a-zA-Z?]/g, '').toUpperCase();
+    const chars = cleanText.split('');
+    const totalChars = chars.length;
+
+
+    const cols = Math.ceil(Math.sqrt(totalChars * (window.innerWidth / window.innerHeight))); // 화면 비율 고려
+    const rows = Math.ceil(totalChars / cols);
+
+    // CSS Grid 스타일 적용
+    container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+    // 3. 글자 배치
+    chars.forEach((char) => {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+
+      const span = document.createElement('span');
+      span.innerText = char;
+      span.className = 'char';
+
+      // 4. 랜덤 회전 (0, 90, 180, 270, -90)
+      const angles = [0, 90, 180, 270, -90];
+      const randomAngle = angles[Math.floor(Math.random() * angles.length)];
+      
+      span.style.transform = `rotate(${randomAngle}deg)`;
+      
+      // 폰트 사이즈 조정 (셀 크기에 꽉 차게)
+      // 화면 크기에 따라 동적으로 바뀌도록 vw/vh 대신 % 사용 시도했으나,
+      // 회전 시 레이아웃이 깨질 수 있어 고정 비율 사용.
+      // JS로 셀 크기에 맞춰 폰트사이즈 계산
+      
+      cell.appendChild(span);
+      container.appendChild(cell);
+    });
+
+    // 5. 남는 칸 처리 (선택사항: 남는 칸을 검은색으로 채우거나 비워둠)
+    const emptyCells = (cols * rows) - totalChars;
+    for(let i=0; i<emptyCells; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        cell.style.background = 'white'; // 남는 칸은 패턴처럼 블랙 처리
+        container.appendChild(cell);
+    }
+    
+    adjustFontSize();
+  }
+
+  // 폰트 사이즈를 셀 크기에 맞춰 최적화하는 함수
+  function adjustFontSize() {
+    const cells = document.querySelectorAll('.grid-cell');
+    if(cells.length === 0) return;
+    
+    // 첫 번째 셀의 크기를 기준으로 폰트 사이즈 설정 (균일하게)
+    const cellWidth = cells[0].clientWidth;
+    const cellHeight = cells[0].clientHeight;
+    const size = Math.min(cellWidth, cellHeight) * 0.85; // 85% 정도 채움
+    
+    const chars = document.querySelectorAll('.char');
+    chars.forEach(c => c.style.fontSize = `${size}px`);
+  }
+
+  // 실행
+  createTypoGrid();
+
+  // 리사이즈 시 재계산
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      createTypoGrid();
+    }, 100);
+  });
+</script>
+
+</body>
+</html>

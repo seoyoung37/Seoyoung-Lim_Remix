@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Summer Day</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Pretendard', sans-serif;
+    background: #fff;
+    color: #000;
+    padding-top: 64px;
+    padding-bottom: 56px;
+    /* 가로 스크롤 허용 */
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    z-index: 1000;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item {
+    position: relative;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item > a {
+    text-decoration: none;
+    color: black;
+    padding: 8px 0;
+    display: inline-block;
+  }
+
+  .submenu {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    background: white;
+    padding-top: 8px;
+  }
+
+  .submenu a {
+    text-decoration: none;
+    color: black;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    /* 텍스트가 왼쪽에서 시작하여 오른쪽으로 길게 이어지도록 설정 */
+    padding: 0 100px; 
+    width: max-content; 
+  }
+
+  .stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .word-container {
+    position: relative;
+    display: inline-block;
+    /* 텍스트 크기 설정 */
+    font-size: 110px; 
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .layer {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* 메인 텍스트 (가장 또렷) */
+  .sharp {
+    position: relative;
+    color: #000;
+    opacity: 1;
+    z-index: 20;
+  }
+
+  /* 강렬한 수직 번짐 효과를 위한 레이어들 */
+  .ghost {
+    color: #000;
+    /* 텍스트가 가로로 길기 때문에 수직으로만 길게 늘어지도록 세팅 */
+    transform-origin: center;
+  }
+
+  /* 위로 번지는 레이어들 (더 촘촘하고 강하게) */
+  .v-up-6 { transform: translateY(-50%) translateY(-100px) scaleY(3); filter: blur(17px); opacity: 0.05; }
+  .v-up-5 { transform: translateY(-50%) translateY(-100px) scaleY(2.8); filter: blur(15px); opacity: 0.06; }
+  .v-up-4 { transform: translateY(-50%) translateY(-100px) scaleY(2.5); filter: blur(12px); opacity: 0.08; }
+  .v-up-3 { transform: translateY(-50%) translateY(-60px) scaleY(2); filter: blur(10px); opacity: 0.1; }
+  .v-up-2 { transform: translateY(-50%) translateY(-30px) scaleY(1.5); filter: blur(5px); opacity: 0.12; }
+  .v-up-1 { transform: translateY(-50%) translateY(-15px) scaleY(1.2); filter: blur(2px); opacity: 0.15; }
+
+  /* 아래로 번지는 레이어들 */
+  .v-down-1 { transform: translateY(-50%) translateY(15px) scaleY(1.2); filter: blur(2px); opacity: 0.15; }
+  .v-down-2 { transform: translateY(-50%) translateY(30px) scaleY(1.5); filter: blur(5px); opacity: 0.12; }
+  .v-down-3 { transform: translateY(-50%) translateY(60px) scaleY(2); filter: blur(10px); opacity: 0.1; }
+  .v-down-4 { transform: translateY(-50%) translateY(100px) scaleY(2.5); filter: blur(12px); opacity: 0.08; }
+  .v-down-5 { transform: translateY(-50%) translateY(100px) scaleY(2.8); filter: blur(15px); opacity: 0.06; }
+  .v-down-6 { transform: translateY(-50%) translateY(100px) scaleY(3); filter: blur(75px); opacity: 0.05; }
+
+  /* 가로 스크롤바 디자인 (깔끔하게) */
+  body::-webkit-scrollbar { height: 4px; }
+  body::-webkit-scrollbar-track { background: transparent; }
+  body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    background: white;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    z-index: 1000;
+  }
+</style>
+</head>
+
+<body>
+    <header>
+        <div class="menu-item"><a href="Home.html">Home</a></div>
+      <nav>
+        <div class="menu-item">
+          <a href="#">SCALE</a>
+          <div class="submenu">
+            <a href="Scale01.html">Scale 01</a>
+            <a href="Scale02.html">Scale 02</a>
+            <a href="Scale03.html">Scale 03</a>
+            <a href="Scale04.html">Scale 04</a>
+          </div>
+        </div>
+    
+        <div class="menu-item">
+          <a href="#">REPETITION</a>
+          <div class="submenu">
+            <a href="Repetition01.html">Repetition 01</a>
+            <a href="Repetition02.html">Repetition 02</a>
+            <a href="Repetition03.html">Repetition 03</a>
+            <a href="Repetition04.html">Repetition 04</a>
+          </div>
+        </div>
+    
+        <div class="menu-item">
+          <a href="#">WEIGHT</a>
+          <div class="submenu">
+            <a href="Weight01.html">Weight 01</a>
+            <a href="Weight02.html">Weight 02</a>
+            <a href="Weight03.html">Weight 03</a>
+            <a href="Weight04.html">Weight 04</a>
+          </div>
+        </div>
+    
+        <div class="menu-item">
+          <a href="#">FOCUS</a>
+          <div class="submenu">
+            <a href="Focus01.html">Focus 01</a>
+            <a href="Focus02.html">Focus 02</a>
+            <a href="Focus03.html">Focus 03</a>
+            <a href="Focus04.html">Focus 04</a>
+          </div>
+        </div>
+    
+        <div class="menu-item">
+          <a href="#">ROTATION</a>
+          <div class="submenu">
+          <a href="Rotation01.html">Rotation 01</a>
+          <a href="Rotation02.html">Rotation 02</a>
+          <a href="Rotation03.html">Rotation 03</a>
+          <a href="Rotation04.html">Rotation 04</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+<main>
+  <div class="stage">
+    <div class="word-container">
+        <span class="layer ghost v-up-6">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+        <span class="layer ghost v-up-5">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-up-4">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-up-3">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-up-2">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-up-1">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      
+      <span class="sharp">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      
+      <span class="layer ghost v-down-1">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-down-2">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-down-3">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-down-4">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-down-5">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+      <span class="layer ghost v-down-6">Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div>2026 Spring Data as Material</div>
+  <div>Seoyoung Lim</div>
+</footer>
+
+</body>
+</html>

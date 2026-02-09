@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Summer Day</title>
+
+  <!-- Fallback display fonts (Yoon 머리정체 느낌의 굵고 압축된 대체) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: white;
+      color: black;
+      font-family: 'Roboto Condensed', system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+    }
+
+    /* ===== HEADER (Scale01 그대로) ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      z-index: 1000;
+    }
+
+    nav {
+      display: flex;
+      gap: 32px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-item {
+      position: relative;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .menu-item > a {
+      text-decoration: none;
+      color: black;
+      padding: 8px 0;
+      display: inline-block;
+    }
+
+    .submenu {
+      position: absolute;
+      top: 28px;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      background: white;
+      padding-top: 8px;
+    }
+
+    .submenu a {
+      text-decoration: none;
+      color: black;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .menu-item:hover .submenu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ===== CONTENT WRAP ===== */
+    main {
+      margin-top: 64px; /* header height */
+      padding: 28px 0 28px 0;
+    }
+
+    /* ===== POSTER CANVAS (이미지처럼 가운데에 “포스터” 한 장) ===== */
+    .poster-wrap{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* 포스터: 뷰포트에서 footer 위까지 꽉 차는 느낌 */
+        /* 포스터: 콘텐츠 높이에 맞춰 늘어나게 (footer가 content 끝에 붙음) */
+    .poster{
+    width: min(980px, 92vw);
+    height: auto;          /* ✅ 고정 높이 제거 */
+    min-height: 0;         /* ✅ 강제 최소 높이 제거 */
+    max-height: none;      /* ✅ 제한 제거 */
+    padding: 18px 22px;
+    background: white;
+    }
+
+    /* grid도 높이 강제 제거 */
+    .grid{
+    width: 100%;
+    height: auto;          /* ✅ 100% 제거 */
+    display: grid;
+    grid-template-columns: 220px 300px 1fr;
+    column-gap: 56px;
+    align-items: start;
+    }
+
+
+    /* 공통 타이포 */
+    .blk { margin: 0; }
+    .tight { line-height: 0.9; }
+    .tight2 { line-height: 0.82; }
+    .caps { text-transform: uppercase; }
+
+    /* “Yoon 머리정체” 대체: 큰 글자는 Anton(굵고 압축), 작은 글자는 Roboto Condensed */
+    .display { font-family: 'Anton', 'Impact', 'Haettenschweiler', 'Roboto Condensed', sans-serif; }
+    .condensed { font-family: 'Roboto Condensed', system-ui, -apple-system, Segoe UI, Arial, sans-serif; }
+
+    /* 크기 스케일 (이미지처럼 단계적으로 크게) */
+    .who-xs   { font-size: 28px;  letter-spacing: -0.02em; }
+    .who-sm   { font-size: 34px;  letter-spacing: -0.02em; }
+    .who-md   { font-size: 44px;  letter-spacing: -0.02em; }
+    .who-lg   { font-size: 60px;  letter-spacing: -0.02em; }
+    .who-xl   { font-size: 110px; letter-spacing: -0.02em; }
+    .who-xxl  { font-size: 150px; letter-spacing: -0.02em; }
+
+    .sub-xs { font-size: 10px; letter-spacing: 0.02em; line-height: 1.05; font-weight: 700; }
+    .sub-sm { font-size: 12px; letter-spacing: 0.02em; line-height: 1.08; font-weight: 700; }
+    .sub-md { font-size: 14px; letter-spacing: 0.02em; line-height: 1.08; font-weight: 700; }
+    .sub-lg { font-size: 16px; letter-spacing: 0.02em; line-height: 1.08; font-weight: 700; }
+
+    /* 블록 간 간격(레퍼런스처럼 “덩어리”로) */
+    .stack { display: flex; flex-direction: column; gap: 16px; }
+
+    .mini {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mini .who { margin: 0; }
+    .mini .sub { margin: 0; }
+
+    /* 컬럼별 “세로 위치”를 이미지처럼 맞추기 위한 스페이서 */
+    .sp-1 { margin-top: 8px; }
+    .sp-2 { margin-top: 32px; }
+    .sp-3 { margin-top: 62px; }
+    .sp-4 { margin-top: 92px; }
+    .sp-5 { margin-top: 128px; }
+
+    /* 오른쪽 큰 컬럼: 위/중간/아래 큰 타이포 배치 */
+    .rightCol{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .rightTop{ margin-top: 6px; }
+    .rightMid{ margin-top: 72px; }
+    .rightLow{ margin-top: 92px; }
+
+    /* 가운데 컬럼: “WHO / MADE...” 묶음들 */
+    .midCol{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 52px;
+      padding-top: 10px;
+    }
+
+    /* 왼쪽 컬럼: 작은 포스터가 반복되는 느낌 */
+    .leftCol{
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 46px;
+      padding-top: 10px;
+    }
+
+    /* ===== FOOTER (Scale01 그대로) ===== */
+    footer {
+      height: 56px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* 반응형: 화면 좁으면 간격만 줄이고, 구조는 유지 */
+    @media (max-width: 980px){
+      header{ padding: 0 18px; }
+      footer{ padding: 0 18px; }
+      .poster{ width: min(980px, 94vw); padding: 14px 14px; }
+      .grid{ column-gap: 28px; grid-template-columns: 200px 260px 1fr; }
+      nav{ gap: 22px; }
+    }
+    @media (max-width: 760px){
+      .poster{ min-height: 920px; }
+      .grid{ column-gap: 18px; grid-template-columns: 170px 220px 1fr; }
+      .who-xxl{ font-size: 118px; }
+      .who-xl{ font-size: 92px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== HEADER (Scale01 그대로) ===== -->
+  <header>
+    <div class="menu-item"><a href="Home.html">Home</a></div>
+    <nav>
+      <div class="menu-item">
+        <a href="#">SCALE</a>
+        <div class="submenu">
+          <a href="Scale01.html">Scale 01</a>
+          <a href="Scale02.html">Scale 02</a>
+          <a href="Scale03.html">Scale 03</a>
+          <a href="Scale04.html">Scale 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">REPETITION</a>
+        <div class="submenu">
+          <a href="Repetition01.html">Repetition 01</a>
+          <a href="Repetition02.html">Repetition 02</a>
+          <a href="Repetition03.html">Repetition 03</a>
+          <a href="Repetition04.html">Repetition 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">WEIGHT</a>
+        <div class="submenu">
+          <a href="Weight01.html">Weight 01</a>
+          <a href="Weight02.html">Weight 02</a>
+          <a href="Weight03.html">Weight 03</a>
+          <a href="Weight04.html">Weight 04</a>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <a href="#">FOCUS</a>
+        <div class="submenu">
+          <a href="Focus01.html">Focus 01</a>
+          <a href="Focus02.html">Focus 02</a>
+          <a href="Focus03.html">Focus 03</a>
+          <a href="Focus04.html">Focus 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">ROTATION</a>
+        <div class="submenu">
+        <a href="Rotation01.html">Rotation 01</a>
+        <a href="Rotation02.html">Rotation 02</a>
+        <a href="Rotation03.html">Rotation 03</a>
+        <a href="Rotation04.html">Rotation 04</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== CONTENT ===== -->
+  <main>
+    <div class="poster-wrap">
+      <section class="poster">
+        <div class="grid">
+
+          <!-- LEFT COLUMN (작은 포스터 반복) -->
+          <div class="leftCol">
+
+            <!-- LEFT 1 -->
+            <div class="mini">
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE WORLD?</p>
+
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE SWAN, AND THE BLACK BEAR?</p>
+
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE GRASSHOPPER?</p>
+
+              <h2 class="blk display caps tight who-sm sp-1">TELL ME</h2>
+              <p class="blk condensed caps sub-xs">WHAT ELSE SHOULD I HAVE DONE?</p>
+
+              <p class="blk condensed caps sub-xs sp-1">DOESN'T</p>
+              <p class="blk condensed caps sub-xs">EVERY-</p>
+              <p class="blk condensed caps sub-xs">THING DIE AT LAST,</p>
+              <p class="blk condensed caps sub-xs">AND&nbsp;&nbsp;&nbsp;&nbsp;TOO</p>
+              <p class="blk condensed caps sub-xs">SOON?</p>
+
+              <h2 class="blk display caps tight who-sm sp-2">TELL ME</h2>
+              <p class="blk condensed caps sub-xs">WHAT IS IT YOU</p>
+              <p class="blk condensed caps sub-xs">PLAN TO DO WITH</p>
+              <p class="blk condensed caps sub-xs">YOUR ONE WILD AND</p>
+              <p class="blk condensed caps sub-xs">PRECIOUS</p>
+              <p class="blk condensed caps sub-xs">LIFE?</p>
+            </div>
+
+            <!-- LEFT 2 -->
+            <div class="mini">
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE WORLD?</p>
+
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE SWAN, AND THE BLACK BEAR?</p>
+
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE GRASSHOPPER?</p>
+
+              <h2 class="blk display caps tight who-sm sp-1">TELL ME</h2>
+              <p class="blk condensed caps sub-xs">WHAT ELSE SHOULD I HAVE DONE?</p>
+
+              <p class="blk condensed caps sub-xs sp-2">DOESN'T</p>
+              <p class="blk condensed caps sub-xs">EVERY-</p>
+              <p class="blk condensed caps sub-xs">THING DIE AT LAST,</p>
+              <p class="blk condensed caps sub-xs">AND&nbsp;&nbsp;&nbsp;&nbsp;TOO</p>
+              <p class="blk condensed caps sub-xs">SOON?</p>
+
+              <h2 class="blk display caps tight who-sm sp-2">TELL ME</h2>
+              <p class="blk condensed caps sub-xs">WHAT IS IT YOU</p>
+              <p class="blk condensed caps sub-xs">PLAN TO DO WITH</p>
+              <p class="blk condensed caps sub-xs">YOUR ONE WILD AND</p>
+              <p class="blk condensed caps sub-xs">PRECIOUS</p>
+              <p class="blk condensed caps sub-xs">LIFE?</p>
+            </div>
+
+            <!-- LEFT 3 -->
+            <div class="mini">
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE WORLD?</p>
+
+              <h2 class="blk display caps tight who-md">WHO</h2>
+              <p class="blk condensed caps sub-xs">MADE THE GRASSHOPPER?</p>
+
+              <h2 class="blk display caps tight who-sm sp-1">TELL ME</h2>
+              <p class="blk condensed caps sub-xs">WHAT ELSE SHOULD I HAVE DONE?</p>
+
+              <p class="blk condensed caps sub-xs sp-2">DOESN'T</p>
+              <p class="blk condensed caps sub-xs">EVERY-</p>
+              <p class="blk condensed caps sub-xs">THING DIE AT LAST,</p>
+              <p class="blk condensed caps sub-xs">AND&nbsp;&nbsp;&nbsp;&nbsp;TOO</p>
+              <p class="blk condensed caps sub-xs">SOON?</p>
+
+              <h2 class="blk display caps tight who-sm sp-2">TELL ME</h2>
+              <p class="blk condensed caps sub-xs">WHAT IS IT YOU</p>
+              <p class="blk condensed caps sub-xs">PLAN TO DO WITH</p>
+              <p class="blk condensed caps sub-xs">YOUR ONE WILD AND</p>
+              <p class="blk condensed caps sub-xs">PRECIOUS</p>
+              <p class="blk condensed caps sub-xs">LIFE?</p>
+            </div>
+
+          </div>
+
+          <!-- MIDDLE COLUMN (중간 크기 문장 덩어리) -->
+          <div class="midCol">
+
+            <!-- MID 1 -->
+            <div class="stack">
+              <div>
+                <h2 class="blk display caps tight who-lg">WHO</h2>
+                <p class="blk condensed caps sub-sm">MADE THE WORLD?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-lg">WHO</h2>
+                <p class="blk condensed caps sub-sm">MADE THE SWAN, AND THE BLACK BEAR?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-lg">WHO</h2>
+                <p class="blk condensed caps sub-sm">MADE THE GRASSHOPPER?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-md">TELL ME</h2>
+                <p class="blk condensed caps sub-sm">WHAT ELSE SHOULD</p>
+                <p class="blk condensed caps sub-sm">I&nbsp;&nbsp;&nbsp;&nbsp;HAVE&nbsp;&nbsp;&nbsp;&nbsp;DONE?</p>
+              </div>
+
+              <div>
+                <p class="blk condensed caps sub-sm">DOESN'T</p>
+                <p class="blk condensed caps sub-sm">EVERY-</p>
+                <p class="blk condensed caps sub-sm">THING DIE AT LAST,</p>
+                <p class="blk condensed caps sub-sm">AND&nbsp;&nbsp;&nbsp;&nbsp;TOO</p>
+                <p class="blk condensed caps sub-sm">SOON?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-md">TELL ME</h2>
+                <p class="blk condensed caps sub-sm">WHAT IS IT YOU</p>
+                <p class="blk condensed caps sub-sm">PLAN TO DO WITH</p>
+                <p class="blk condensed caps sub-sm">YOUR ONE WILD AND</p>
+                <p class="blk condensed caps sub-sm">PRECIOUS</p>
+                <p class="blk condensed caps sub-sm">LIFE?</p>
+              </div>
+            </div>
+
+            <!-- MID 2 (아래 반복 느낌) -->
+            <div class="stack">
+              <div>
+                <h2 class="blk display caps tight who-lg">WHO</h2>
+                <p class="blk condensed caps sub-sm">MADE THE WORLD?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-lg">WHO</h2>
+                <p class="blk condensed caps sub-sm">MADE THE GRASSHOPPER?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-md">TELL ME</h2>
+                <p class="blk condensed caps sub-sm">WHAT ELSE SHOULD</p>
+                <p class="blk condensed caps sub-sm">I&nbsp;&nbsp;&nbsp;&nbsp;HAVE&nbsp;&nbsp;&nbsp;&nbsp;DONE?</p>
+              </div>
+
+              <div>
+                <p class="blk condensed caps sub-sm">DOESN'T</p>
+                <p class="blk condensed caps sub-sm">EVERY-</p>
+                <p class="blk condensed caps sub-sm">THING DIE AT LAST,</p>
+                <p class="blk condensed caps sub-sm">AND&nbsp;&nbsp;&nbsp;&nbsp;TOO</p>
+                <p class="blk condensed caps sub-sm">SOON?</p>
+              </div>
+
+              <div>
+                <h2 class="blk display caps tight who-md">TELL ME</h2>
+                <p class="blk condensed caps sub-sm">WHAT IS IT YOU</p>
+                <p class="blk condensed caps sub-sm">PLAN TO DO WITH</p>
+                <p class="blk condensed caps sub-sm">YOUR ONE WILD AND</p>
+                <p class="blk condensed caps sub-sm">PRECIOUS</p>
+                <p class="blk condensed caps sub-sm">LIFE?</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN (큰 타이포) -->
+          <div class="rightCol">
+
+            <!-- TOP huge WHO / phrase -->
+            <div class="rightTop">
+              <h1 class="blk display caps tight2 who-xxl">WHO</h1>
+              <p class="blk condensed caps sub-lg" style="margin-top: 6px;">MADE THE WORLD?</p>
+            </div>
+
+            <!-- MID huge WHO with subline -->
+            <div class="rightMid">
+              <h1 class="blk display caps tight2 who-xxl">WHO</h1>
+              <p class="blk condensed caps sub-lg" style="margin-top: 6px;">MADE THE SWAN, AND THE BLACK BEAR?</p>
+            </div>
+
+            <!-- LOWER: WHO + TELL ME big block -->
+            <div class="rightLow">
+              <h1 class="blk display caps tight2 who-xxl">WHO</h1>
+              <p class="blk condensed caps sub-lg" style="margin-top: 6px;">MADE THE GRASSHOPPER?</p>
+
+              <div style="margin-top: 56px;">
+                <h1 class="blk display caps tight2 who-xxl">TELL</h1>
+                <h1 class="blk display caps tight2 who-xxl" style="margin-top:-18px;">ME</h1>
+
+                <div style="margin-top: 12px;">
+                  <p class="blk condensed caps sub-lg">WHAT ELSE SHOULD I HAVE</p>
+                  <p class="blk condensed caps sub-lg">DONE?</p>
+                </div>
+
+                <div style="margin-top: 44px;">
+                  <p class="blk condensed caps sub-lg">DOESN'T EVERYTHING DIE AT LAST,</p>
+                  <p class="blk condensed caps sub-lg">AND TOO SOON?</p>
+                </div>
+
+                <div style="margin-top: 62px;">
+                  <h1 class="blk display caps tight2 who-xxl">TELL</h1>
+                  <h1 class="blk display caps tight2 who-xxl" style="margin-top:-18px;">ME</h1>
+
+                  <div style="margin-top: 12px;">
+                    <p class="blk condensed caps sub-lg">WHAT IS IT YOU</p>
+                    <p class="blk condensed caps sub-lg">PLAN TO DO WITH</p>
+                    <p class="blk condensed caps sub-lg">YOUR ONE WILD AND</p>
+                    <p class="blk condensed caps sub-lg">PRECIOUS&nbsp;&nbsp;&nbsp;&nbsp;LIFE?</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER (Scale01 그대로) ===== -->
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>The Summer Day</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: BLACK; /* 이미지의 딥 퍼플 */
+    overflow: hidden;
+    width: 100vw; height: 100vh;
+    font-family: 'Pretendard', sans-serif;
+  }
+
+  /* ===== HEADER & FOOTER (기존 디자인 유지) ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    z-index: 1000;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item {
+    position: relative;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item > a {
+    text-decoration: none;
+    color: black;
+    padding: 8px 0;
+    display: inline-block;
+  }
+
+  .submenu {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    background: white;
+    padding-top: 8px;
+  }
+
+  .submenu a {
+    text-decoration: none;
+    color: black;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  footer {
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 56px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    background: BLACK;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    z-index: 1000;
+    -webkit-text-fill-color: white;
+  }
+
+  /* ===== MAIN ===== */
+  main { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+
+    <header>
+        <div class="menu-item"><a href="Home.html">Home</a></div>
+        <nav>
+          <div class="menu-item">
+            <a href="#">SCALE</a>
+            <div class="submenu">
+              <a href="Scale01.html">Scale 01</a>
+              <a href="Scale02.html">Scale 02</a>
+              <a href="Scale03.html">Scale 03</a>
+              <a href="Scale04.html">Scale 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">REPETITION</a>
+            <div class="submenu">
+              <a href="Repetition01.html">Repetition 01</a>
+              <a href="Repetition02.html">Repetition 02</a>
+              <a href="Repetition03.html">Repetition 03</a>
+              <a href="Repetition04.html">Repetition 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">WEIGHT</a>
+            <div class="submenu">
+              <a href="Weight01.html">Weight 01</a>
+              <a href="Weight02.html">Weight 02</a>
+              <a href="Weight03.html">Weight 03</a>
+              <a href="Weight04.html">Weight 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">FOCUS</a>
+            <div class="submenu">
+              <a href="Focus01.html">Focus 01</a>
+              <a href="Focus02.html">Focus 02</a>
+              <a href="Focus03.html">Focus 03</a>
+              <a href="Focus04.html">Focus 04</a>
+            </div>
+          </div>
+          <div class="menu-item">
+            <a href="#">ROTATION</a>
+            <div class="submenu">
+            <a href="Rotation01.html">Rotation 01</a>
+            <a href="Rotation02.html">Rotation 02</a>
+            <a href="Rotation03.html">Rotation 03</a>
+            <a href="Rotation04.html">Rotation 04</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+  <main><canvas id="textCanvas"></canvas></main>
+
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('textCanvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+    // 설정: 이미지의 느낌을 내기 위한 미세 조정
+    const config = {
+      gridSize: 4,         // 선 간격 (작을수록 선이 많아져 정교해짐)
+      minWidth: 1,       // 가장 가는 선 (배경)
+      maxWidth: 2,         // 가장 굵은 선 (글자 중심)
+      lineHeight: 2,      // 분절된 선 마디의 높이
+      lineGap: 7,          // 마디 사이의 수직 간격
+      color: '#FFFFFF'     // 오렌지색
+    };
+
+    const poemLines = [
+        " ",
+      "WHO MADE THE WOLRD?",
+      "WHO MADE THE SWAN, AND THE BLACK BEAR?",
+      "WHO MADE THE GRASSHOPPER?",
+      "TELL ME, WHAT ELSE SHOULD I HAVE DONE?",
+      "DOESN'T EVERYTHING DIE AT LAST, AND TOO SOON?",
+      "TELL ME, WHAT IS IT YOU PLAN TO DO",
+      "WITH YOUR ONE WILD AND PRECIOUS LIFE?"
+    ];
+
+    function init() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      render();
+    }
+
+    function render() {
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. 데이터 추출용 오프스크린 캔버스
+      const offCanvas = document.createElement('canvas');
+      const offCtx = offCanvas.getContext('2d');
+      offCanvas.width = w;
+      offCanvas.height = h;
+
+      // 텍스트 그리기 (굵고 크게)
+      const fontSize = Math.min(w / 14, 65);
+      offCtx.font = `900 ${fontSize}px Pretendard`;
+      offCtx.textAlign = 'center';
+      offCtx.textBaseline = 'middle';
+      offCtx.fillStyle = 'white';
+
+      const spacing = fontSize * 1.15;
+      const startY = (h - (poemLines.length * spacing)) / 2 + (spacing / 2);
+
+      poemLines.forEach((line, i) => {
+        offCtx.fillText(line, w / 2, startY + (i * spacing));
+      });
+
+      // 2. 픽셀 데이터 분석
+      const pixels = offCtx.getImageData(0, 0, w, h).data;
+
+      // 3. 메인 캔버스에 가변 굵기 선 그리기
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = config.color;
+      ctx.lineCap = 'square';
+
+      for (let x = 0; x < w; x += config.gridSize) {
+        for (let y = 0; y < h; y += config.lineHeight + config.lineGap) {
+          
+          // 픽셀의 밝기(알파값)를 통해 굵기 결정
+          // 글자 중심일수록 255에 가깝고 외곽일수록 0에 가까움
+          const pixelIdx = (Math.floor(y) * w + Math.floor(x)) * 4;
+          const intensity = pixels[pixelIdx + 3] / 255; // 0.0 ~ 1.0
+
+          // 선 굵기 계산 (Min과 Max 사이를 보간)
+          const weight = config.minWidth + (config.maxWidth - config.minWidth) * intensity;
+          
+          ctx.beginPath();
+          ctx.lineWidth = weight;
+          
+          // 배경 선은 살짝 투명하게 처리하여 대비 극대화
+          ctx.globalAlpha = intensity > 0 ? 1.0 : 0.2;
+          
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y + config.lineHeight);
+          ctx.stroke();
+        }
+      }
+    }
+
+    window.addEventListener('resize', init);
+    document.fonts.ready.then(init);
+  </script>
+</body>
+</html>

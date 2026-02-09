@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Summer Day</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Pretendard', sans-serif;
+  background: white;
+  color: black;
+}
+
+/* ===== HEADER (Scale02와 동일) ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+nav {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item > a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 0;
+  display: inline-block;
+}
+
+/* SUB MENU */
+.submenu {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: white;
+  padding-top: 8px;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ===== CONTENT ===== */
+main {
+  margin-top: 64px; /* 👈 header 높이만큼만 밀기 */
+}
+
+/* ===== SVG (원본 유지) ===== */
+svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 텍스트 스타일 – Scale01 원본 */
+.t1 { font-size: 80px; font-weight: 700; letter-spacing: 0.01em; fill: black; }
+.t2 { font-size: 60px; font-weight: 700; letter-spacing: 0.00em; fill: black; }
+.t3 { font-size: 48px; font-weight: 700; letter-spacing: 0.01em; fill: black; }
+.t4 { font-size: 36px; font-weight: 700; letter-spacing: 0.01em; fill: black; }
+.t5 { font-size: 24px; font-weight: 700; letter-spacing: 0.01em; fill: black; }
+.t6 { font-size: 12px; font-weight: 700; letter-spacing: 0.01em; fill: black; }
+
+/* ===== FOOTER (Scale02와 동일) ===== */
+footer {
+  height: 56px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="menu-item"><a href="Home.html">Home</a></div>
+  <nav>
+    <div class="menu-item">
+      <a href="#">SCALE</a>
+      <div class="submenu">
+        <a href="Scale01.html">Scale 01</a>
+        <a href="Scale02.html">Scale 02</a>
+        <a href="Scale03.html">Scale 03</a>
+        <a href="Scale04.html">Scale 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">REPETITION</a>
+      <div class="submenu">
+        <a href="Repetition01.html">Repetition 01</a>
+        <a href="Repetition02.html">Repetition 02</a>
+        <a href="Repetition03.html">Repetition 03</a>
+        <a href="Repetition04.html">Repetition 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">WEIGHT</a>
+      <div class="submenu">
+        <a href="Weight01.html">Weight 01</a>
+        <a href="Weight02.html">Weight 02</a>
+        <a href="Weight03.html">Weight 03</a>
+        <a href="Weight04.html">Weight 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">FOCUS</a>
+      <div class="submenu">
+        <a href="Focus01.html">Focus 01</a>
+        <a href="Focus02.html">Focus 02</a>
+        <a href="Focus03.html">Focus 03</a>
+        <a href="Focus04.html">Focus 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">ROTATION</a>
+      <div class="submenu">
+      <a href="Rotation01.html">Rotation 01</a>
+      <a href="Rotation02.html">Rotation 02</a>
+      <a href="Rotation03.html">Rotation 03</a>
+      <a href="Rotation04.html">Rotation 04</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== CONTENT ===== -->
+<main>
+
+<!-- ❗❗ Scale01 SVG 그대로 유지 ❗❗ -->
+<svg viewBox="0 0 1000 4100" preserveAspectRatio="xMidYMid meet">
+
+  <path
+    id="snakePath"
+    d="
+      M 500 10
+      C 225 0, 225 350, 500 350
+      L 500 680
+      C 850 700, 850 1250, 500 1250
+      L 500 1900
+      C 1 2000, 1 3100, 500 3100
+      L 500 4100
+    "
+    fill="none"
+  />
+
+  <text class="t1"><textPath href="#snakePath" startOffset="0%">
+    WHOMADETHEWORLD?
+  </textPath></text>
+
+  <text class="t2"><textPath href="#snakePath" startOffset="19.6%">
+    WHOMADETHESWAN,ANDTHEBLACKBEAR?
+  </textPath></text>
+
+  <text class="t3"><textPath href="#snakePath" startOffset="45%">
+    WHOMADETHEGRASSHOPPER?
+  </textPath></text>
+
+  <text class="t4"><textPath href="#snakePath" startOffset="59.8%">
+    TELLME,WHATELSESHOULDIHAVEDONE?
+  </textPath></text>
+
+  <text class="t5"><textPath href="#snakePath" startOffset="74.2%">
+    DOESN'TEVERYTHINGDIEATLAST,ANDTOOSOON?
+  </textPath></text>
+
+  <text class="t6"><textPath href="#snakePath" startOffset="85.76%">
+    TELLME,WHATISITYOUPLANTODOWITHYOURONEWILDANDPRECIOUSLIFE?
+  </textPath></text>
+
+</svg>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div>2026 Spring Data as Material</div>
+  <div>Seoyoung Lim</div>
+</footer>
+
+</body>
+</html>

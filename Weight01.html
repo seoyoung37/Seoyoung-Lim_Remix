@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Summer Day</title>
+
+<!-- Pretendard (Header/Footer 유지용) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+<!-- Puffy / Bubble font (Content 전용) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; }
+
+  /* ===== 페이지 레이아웃: footer 좁아짐/겹침 방지 ===== */
+  body {
+    margin: 0;
+    background: #fff;
+    color: #000;
+
+    /* footer가 “아래에 정상적으로” 붙도록 */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    font-family: 'Pretendard', sans-serif; /* 기본은 Pretendard */
+  }
+
+  /* ===== HEADER (Scale01 그대로) ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    z-index: 1000;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item {
+    position: relative;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item > a {
+    text-decoration: none;
+    color: black;
+    padding: 8px 0;
+    display: inline-block;
+  }
+
+  .submenu {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    background: white;
+    padding-top: 8px;
+  }
+
+  .submenu a {
+    text-decoration: none;
+    color: black;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  /* ===== CONTENT ===== */
+  main {
+    margin-top: 64px;     /* header 만큼만 밀기 */
+    flex: 1;              /* footer가 눌리지 않게 main이 공간 차지 */
+    padding: 60px 0 80px; /* 위아래 여백 */
+    display: flex;
+    justify-content: center;
+  }
+
+  .content {
+    width: min(1080px, 92vw);     /* “동일한 width”로 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    align-items: center;
+  }
+
+  /* ===== Puffy typography (한 폰트로 통일) ===== */
+  .line {
+    width: 100%;
+    text-align: center;
+
+    /* 폰트 통일 */
+    font-family: "Rubik Puddles", system-ui, sans-serif;
+
+    /* stroke only */
+    color: transparent;
+    -webkit-text-stroke: var(--stroke, 2px) #000;
+    text-stro
+    text-stroke: var(--stroke, 2px) #000;
+
+    /* 가독성 */
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+
+    /* 혹시 stroke가 깨질 때 */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+    margin: 0;
+  }
+
+  /* 크기 + stroke가 점점 커지도록 */
+  .l1 { font-size: clamp(36px, 4.2vw, 56px);  --stroke: 0.2px; }
+  .l2 { font-size: clamp(42px, 5.0vw, 70px);  --stroke: 1px; }
+  .l3 { font-size: clamp(50px, 5.8vw, 86px);  --stroke: 3px; }
+  .l4 { font-size: clamp(58px, 6.6vw, 102px); --stroke: 7px; }
+  .l5 { font-size: clamp(66px, 7.4vw, 120px); --stroke: 10px; }
+  .l6 { font-size: clamp(74px, 8.2vw, 140px); --stroke: 20px; }
+
+  /* 문장이 길어 줄바꿈되면 가운데 정렬 유지 */
+  .line { padding: 0 10px; }
+
+  /* ===== FOOTER (Scale01 그대로) ===== */
+  footer {
+    height: 56px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    border-top: 1px solid rgba(0,0,0,0.05);
+
+    /* Pretendard 유지 */
+    font-family: 'Pretendard', sans-serif;
+  }
+
+  /* ===== Responsive spacing ===== */
+  @media (max-width: 980px){
+    header { padding: 0 18px; }
+    footer { padding: 0 18px; }
+    main   { padding: 44px 0 64px; }
+    .content { width: min(980px, 94vw); gap: 22px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER (Scale01 그대로) ===== -->
+<header>
+  <div class="menu-item"><a href="Home.html">Home</a></div>
+  <nav>
+    <div class="menu-item">
+      <a href="#">SCALE</a>
+      <div class="submenu">
+        <a href="Scale01.html">Scale 01</a>
+        <a href="Scale02.html">Scale 02</a>
+        <a href="Scale03.html">Scale 03</a>
+        <a href="Scale04.html">Scale 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">REPETITION</a>
+      <div class="submenu">
+        <a href="Repetition01.html">Repetition 01</a>
+        <a href="Repetition02.html">Repetition 02</a>
+        <a href="Repetition03.html">Repetition 03</a>
+        <a href="Repetition04.html">Repetition 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">WEIGHT</a>
+      <div class="submenu">
+        <a href="Weight01.html">Weight 01</a>
+        <a href="Weight02.html">Weight 02</a>
+        <a href="Weight03.html">Weight 03</a>
+        <a href="Weight04.html">Weight 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">FOCUS</a>
+      <div class="submenu">
+        <a href="Focus01.html">Focus 01</a>
+        <a href="Focus02.html">Focus 02</a>
+        <a href="Focus03.html">Focus 03</a>
+        <a href="Focus04.html">Focus 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">ROTATION</a>
+      <div class="submenu">
+      <a href="Rotation01.html">Rotation 01</a>
+      <a href="Rotation02.html">Rotation 02</a>
+      <a href="Rotation03.html">Rotation 03</a>
+      <a href="Rotation04.html">Rotation 04</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== CONTENT ===== -->
+<main>
+  <section class="content" aria-label="Puffy stroke scale typography">
+    <p class="line l1">Who made the world?</p>
+    <p class="line l2">Who made the swan, and the black bear?</p>
+    <p class="line l3">Who made the grasshopper?</p>
+    <p class="line l4">Tell me, what else should I have done?</p>
+    <p class="line l5">Doesn't everything die at last, and too soon?</p>
+    <p class="line l6">Tell me, what is it you plan to do with your one wild and precious life?</p>
+  </section>
+</main>
+
+<!-- ===== FOOTER (Scale01 그대로) ===== -->
+<footer>
+  <div>2026 Spring Data as Material</div>
+  <div>Seoyoung Lim</div>
+</footer>
+
+</body>
+</html>

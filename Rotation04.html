@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The Summer Day</title>
+
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000000; /* 흰색 배경 */
+      color: white;        /* 검정 텍스트 */
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Pretendard', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER (그대로) ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: black;
+    z-index: 1000;
+  }
+
+  nav {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item {
+    position: relative;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .menu-item > a {
+    text-decoration: none;
+    color: white;
+    padding: 8px 0;
+    display: inline-block;
+  }
+
+  .submenu {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    background: black;
+    padding-top: 8px;
+  }
+
+  .submenu a {
+    text-decoration: none;
+    color: white;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .menu-item:hover .submenu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+    /* ===== ARTWORK STAGE (ROTATION AREA) ===== */
+    .art-stage {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 중앙 정렬 */
+      align-items: center;
+      overflow: hidden;
+      
+      /* 3D 공간감 설정 (값이 작을수록 왜곡이 심함) */
+      perspective: 600px; 
+      perspective-origin: center center;
+    }
+
+    /* 각 문장을 감싸는 컨테이너 */
+    .rotate-row {
+      width: 100%;
+      text-align: center;
+      
+      /* 3D 배치 허용 */
+      transform-style: preserve-3d;
+      will-change: transform, opacity, filter;
+      
+      /* 레퍼런스처럼 줄간격을 매우 좁게 */
+      margin: -1.5vh 0; 
+      padding: 1vh 0;
+    }
+
+    /* 텍스트 스타일 */
+    .rotate-text {
+      display: inline-block;
+      font-weight: 900; /* 가장 굵게 */
+      font-size: 8vh;   /* 화면 꽉 차게 */
+      line-height: 1;
+      white-space: nowrap;
+      
+      /* 레퍼런스 느낌: 약간 장평을 넓히거나 좁혀서 기하학적으로 */
+      letter-spacing: -0.02em; 
+      transform: scaleX(1.1); /* 옆으로 살짝 넓적하게 */
+    }
+
+    /* ===== FOOTER (기존 유지) ===== */
+    footer {
+      flex: 0 0 56px;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      background: black;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="menu-item"><a href="Home.html">Home</a></div>
+        <nav>
+          <div class="menu-item">
+            <a href="#">SCALE</a>
+            <div class="submenu">
+              <a href="Scale01.html">Scale 01</a>
+              <a href="Scale02.html">Scale 02</a>
+              <a href="Scale03.html">Scale 03</a>
+              <a href="Scale04.html">Scale 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">REPETITION</a>
+            <div class="submenu">
+              <a href="Repetition01.html">Repetition 01</a>
+              <a href="Repetition02.html">Repetition 02</a>
+              <a href="Repetition03.html">Repetition 03</a>
+              <a href="Repetition04.html">Repetition 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">WEIGHT</a>
+            <div class="submenu">
+              <a href="Weight01.html">Weight 01</a>
+              <a href="Weight02.html">Weight 02</a>
+              <a href="Weight03.html">Weight 03</a>
+              <a href="Weight04.html">Weight 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">FOCUS</a>
+            <div class="submenu">
+              <a href="Focus01.html">Foucs 01</a>
+              <a href="Focus02.html">Foucs 02</a>
+              <a href="Focus03.html">Foucs 03</a>
+              <a href="Focus04.html">Foucs 04</a>
+            </div>
+          </div>
+      
+          <div class="menu-item">
+            <a href="#">ROTATION</a>
+            <div class="submenu">
+            <a href="Rotation01.html">Rotation 01</a>
+            <a href="Rotation02.html">Rotation 02</a>
+            <a href="Rotation03.html">Rotation 03</a>
+            <a href="Rotation04.html">Rotation 04</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+  <div class="art-stage" id="artStage">
+    </div>
+
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+
+<script>
+  function createRotationPattern() {
+    const container = document.getElementById('artStage');
+    container.innerHTML = '';
+
+    const lines = [
+      "Who made the world?",
+      "Who made the swan, and the black bear?",
+      "Who made the grasshopper?",
+      "Tell me, what else should I have done?",
+      "Doesn't everything die at last, and too soon?",
+      "Tell me, what is it you plan to do with your one wild and precious life?"
+    ];
+
+    // 중간 지점 계산 (이 지점을 기준으로 위아래 각도가 반전됨)
+    const centerIndex = (lines.length - 1) / 2;
+
+    lines.forEach((lineText, index) => {
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'rotate-row';
+      
+      const span = document.createElement('span');
+      span.className = 'rotate-text';
+      span.innerText = lineText; // 대문자로 변환하려면 .toUpperCase() 추가
+      rowDiv.appendChild(span);
+
+      // ===== Rotation 로직 =====
+      
+      // 중심으로부터의 거리 (-2.5 ~ +2.5)
+      const distFromCenter = index - centerIndex;
+      
+      // 1. 회전 각도 (Rotate X)
+      // 위쪽(인덱스 작음)은 양수 각도(뒤로 누움), 아래쪽은 음수 각도(앞으로 누움... 혹은 그 반대)
+      // 레퍼런스 이미지는 "가운데가 튀어나오고 위아래가 뒤로 들어가는" 형태입니다.
+      // RotateX(+) -> 윗변이 뒤로감
+      // RotateX(-) -> 아랫변이 뒤로감
+      
+      // 위쪽 줄(dist < 0): 윗변이 뒤로 가야함 -> rotateX 양수
+      // 아래쪽 줄(dist > 0): 아랫변이 뒤로 가야함 -> rotateX 음수
+      
+      const maxAngle = 90; // 최대 꺾임 각도
+      const angle = distFromCenter * -25; // 각도 간격 조절
+      
+      // 2. 투명도 (Opacity) & 흐림 (Blur)
+      // 중심에서 멀어질수록 흐려지게
+      const absDist = Math.abs(distFromCenter);
+      const opacity = 1 - (absDist * 0.25); // 1 -> 0.75 -> 0.5 ...
+      const blur = absDist * 2; // 0px -> 2px -> 4px ...
+
+      // 스타일 적용
+      rowDiv.style.transform = `rotateX(${angle}deg) translateZ(${-absDist * 20}px)`;
+      rowDiv.style.opacity = Math.max(0.1, opacity); // 최소 0.1 유지
+      // rowDiv.style.filter = `blur(${blur}px)`; // 흐림 효과 (원하면 주석 해제)
+      
+      // 폰트 사이즈 보정 (긴 문장은 작게)
+    
+
+      container.appendChild(rowDiv);
+    });
+  }
+
+  createRotationPattern();
+  window.addEventListener('resize', createRotationPattern);
+</script>
+
+</body>
+</html>

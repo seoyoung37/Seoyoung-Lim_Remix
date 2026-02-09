@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The Summer Day</title>
+
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fdfdfd; /* 완전 흰색에 가까운 미색 (종이 질감 느낌) */
+      color: black;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Pretendard', sans-serif;
+      
+      /* 헤더/푸터 공간 */
+      padding-top: 64px;
+      padding-bottom: 56px;
+    }
+
+    /* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item > a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 0;
+  display: inline-block;
+}
+
+/* ===== SUB MENU ===== */
+.submenu {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  padding-top: 8px;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+    /* ===== ARTWORK STAGE ===== */
+    .art-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      
+      /* 3D 효과를 줘서 회전이 더 자연스럽게 보이게 함 */
+      /*perspective: 1000px; */
+    }
+
+    /* 개별 텍스트 라인 스타일 */
+    .fan-text {
+      position: absolute;
+      top: 60px; /* 시작 위치 Y (헤더 아래) */
+      left: 60px; /* 시작 위치 X */
+      
+      white-space: nowrap; /* 줄바꿈 없이 한 줄로 */
+      font-family: 'Pretendard', sans-serif;
+      font-weight: 800; /* 굵게 */
+      font-size: 2.5vh;   /* 화면 높이에 비례한 폰트 크기 */
+      letter-spacing: -0.15em;
+      text-transform: lowercase; /* Undertones 이미지처럼 소문자 */
+      
+      /* 회전의 기준점: 왼쪽 중앙 */
+      transform-origin: left center; 
+      
+      /* 색상: 검정이지만 겹치는 효과를 위해 투명도 사용 */
+      color: rgba(0, 0, 0, 0.8);
+      
+      /* 겹치는 부분이 진해지도록 블렌딩 모드 적용 (잉크 느낌) */
+      mix-blend-mode: multiply;
+      
+      pointer-events: none; /* 마우스 통과 */
+      will-change: transform;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 56px;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      background: rgba(253, 253, 253, 0.95);
+      border-top: 1px solid rgba(0,0,0,0.05);
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="menu-item"><a href="Home.html">Home</a></div>
+    <nav>
+      <div class="menu-item">
+        <a href="#">SCALE</a>
+        <div class="submenu">
+          <a href="Scale01.html">Scale 01</a>
+          <a href="Scale02.html">Scale 02</a>
+          <a href="Scale03.html">Scale 03</a>
+          <a href="Scale04.html">Scale 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">REPETITION</a>
+        <div class="submenu">
+          <a href="Repetition01.html">Repetition 01</a>
+          <a href="Repetition02.html">Repetition 02</a>
+          <a href="Repetition03.html">Repetition 03</a>
+          <a href="Repetition04.html">Repetition 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">WEIGHT</a>
+        <div class="submenu">
+          <a href="Weight01.html">Weight 01</a>
+          <a href="Weight02.html">Weight 02</a>
+          <a href="Weight03.html">Weight 03</a>
+          <a href="Weight04.html">Weight 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">FOCUS</a>
+        <div class="submenu">
+          <a href="Focus01.html">Focus 01</a>
+          <a href="Focus02.html">Focus 02</a>
+          <a href="Focus03.html">Focus 03</a>
+          <a href="Focus04.html">Focus 04</a>
+        </div>
+      </div>
+  
+      <div class="menu-item">
+        <a href="#">ROTATION</a>
+        <div class="submenu">
+        <a href="Rotation01.html">Rotation 01</a>
+        <a href="Rotation02.html">Rotation 02</a>
+        <a href="Rotation03.html">Rotation 03</a>
+        <a href="Rotation04.html">Rotation 04</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+<div class="art-stage" id="artStage">
+  </div>
+  <footer>
+    <div>2026 Spring Data as Material</div>
+    <div>Seoyoung Lim</div>
+  </footer>
+
+<script>
+  function createFanPattern() {
+    const container = document.getElementById('artStage');
+    container.innerHTML = ''; // 초기화
+
+    // 표시할 전체 텍스트
+    const textContent = "who made the world? who made the swan, and the black bear? who made the grasshopper? tell me, what else should i have done? doesn't everything die at last, and too soon? tell me, what is it you plan to do with your one wild and precious life?";
+    
+    // 설정값
+    const totalCopies = 100; // 텍스트 반복 횟수 (부채살 개수)
+    const startAngle = 0;   // 시작 각도 (0도 = 수평)
+    const angleStep = 1;  // 하나당 회전할 각도 (간격)
+    
+    for (let i = 0; i < totalCopies; i++) {
+      const div = document.createElement('div');
+      div.className = 'fan-text';
+      div.innerText = textContent;
+      
+      // 1. 회전 계산
+      const rotation = startAngle + (i * 1.8 * angleStep);
+      
+      // 2. 스타일 적용
+      // transform: rotate(...) 
+      div.style.transform = `rotate(${rotation}deg)`;
+      
+      // 3. Opacity (투명도) & Blur (흐림) 효과
+      // 뒤쪽(각도가 커질수록) 혹은 앞쪽으로 갈수록 흐리게 하려면 index 활용
+      // 여기서는 Undertones 이미지처럼 끝으로 갈수록 살짝 흐려지거나 겹치게 둠
+      
+      // 예: 순서대로 쌓이게 z-index 설정 (선택사항)
+      div.style.zIndex = totalCopies - i; 
+
+      // 0번째는 진하게(0.8), 뒤로 갈수록 점점 연하게(0.1까지)
+      const opacity = 0.8 - (i / totalCopies) * 0.7; 
+      div.style.color = `rgba(0, 0, 0, ${opacity})`;
+
+
+      container.appendChild(div);
+    }
+  }
+
+  // 실행
+  createFanPattern();
+
+  // 창 크기 변경 시 재실행 (필요하다면)
+  window.addEventListener('resize', createFanPattern);
+</script>
+
+</body>
+</html>

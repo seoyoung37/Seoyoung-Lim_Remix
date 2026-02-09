@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Summer Day</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: white;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: black;
+}
+
+/* ===== HEADER (공통) ===== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+nav {
+  display: flex;
+  gap: 32px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.menu-item > a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 0;
+  display: inline-block;
+}
+
+/* SUB MENU */
+.submenu {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  padding-top: 8px;
+}
+
+.submenu a {
+  text-decoration: none;
+  color: black;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.menu-item:hover .submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ===== CONTENT ===== */
+main {
+  margin-top: 64px; /* header 높이만큼 */
+}
+
+/* SVG 원본 유지 */
+svg {
+  width: 100vw;
+  height: 200vh;
+  display: block;
+}
+
+/* TEXT STYLES (원본 그대로) */
+.t1 { font-size: 48px; fill: black; }
+.t2 { font-size: 40px; fill: black; opacity: 0.85; }
+.t3 { font-size: 32px; fill: black; opacity: 0.7; }
+.t4 { font-size: 24.5px; fill: black; opacity: 0.55; }
+.t5 { font-size: 20px; fill: black; opacity: 0.4; }
+.t6 { font-size: 16px; fill: black; opacity: 0.25; }
+.t7 { font-size: 12px; fill: black; opacity: 0.1; }
+
+/* ===== FOOTER (공통) ===== */
+footer {
+  height: 56px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+<div class="menu-item"><a href="Home.html">Home</a></div>
+  <nav>
+    <div class="menu-item">
+      <a href="#">SCALE</a>
+      <div class="submenu">
+        <a href="Scale01.html">Scale 01</a>
+        <a href="Scale02.html">Scale 02</a>
+        <a href="Scale03.html">Scale 03</a>
+        <a href="Scale04.html">Scale 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">REPETITION</a>
+      <div class="submenu">
+        <a href="Repetition01.html">Repetition 01</a>
+        <a href="Repetition02.html">Repetition 02</a>
+        <a href="Repetition03.html">Repetition 03</a>
+        <a href="Repetition04.html">Repetition 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">WEIGHT</a>
+      <div class="submenu">
+        <a href="Weight01.html">Weight 01</a>
+        <a href="Weight02.html">Weight 02</a>
+        <a href="Weight03.html">Weight 03</a>
+        <a href="Weight04.html">Weight 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">FOCUS</a>
+      <div class="submenu">
+        <a href="Focus01.html">Focus 01</a>
+        <a href="Focus02.html">Focus 02</a>
+        <a href="Focus03.html">Focus 03</a>
+        <a href="Focus04.html">Focus 04</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <a href="#">Rotation</a>
+      <div class="submenu">
+      <a href="Rotation01.html">Rotation 01</a>
+      <a href="Rotation02.html">Rotation 02</a>
+      <a href="Rotation03.html">Rotation 03</a>
+      <a href="Rotation04.html">Rotation 04</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== CONTENT ===== -->
+<main>
+
+<svg viewBox="0 0 1000 1500">
+
+  <defs>
+    <path id="rect1" d="M 50 50 H 950 V 1400 H 50 Z" />
+    <path id="rect2" d="M 125 125 H 875 V 1325 H 125 Z" />
+    <path id="rect3" d="M 200 200 H 800 V 1250 H 200 Z" />
+    <path id="rect4" d="M 275 275 H 725 V 1175 H 275 Z" />
+    <path id="rect5" d="M 350 350 H 650 V 1100 H 350 Z" />
+    <path id="rect6" d="M 425 425 H 575 V 1025 H 425 Z" />
+    <path id="rect7" d="M 500 500 H 500 V 950 H 500 Z" />
+  </defs>
+
+  <text class="t1"><textPath href="#rect1">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+  <text class="t2"><textPath href="#rect2">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+  <text class="t3"><textPath href="#rect3">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+  <text class="t4"><textPath href="#rect4">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+  <text class="t5"><textPath href="#rect5">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+  <text class="t6"><textPath href="#rect6">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+  <text class="t7"><textPath href="#rect7">
+    Who made the world? Who made the swan, and the black bear? Who made the grasshopper? Tell me, what else should I have done? Doesn't everything die at last, and too soon? Tell me, what is it you plan to do with your one wild and precious life?
+  </textPath></text>
+
+</svg>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div>2026 Spring Data as Material</div>
+  <div>Seoyoung Lim</div>
+</footer>
+
+</body>
+</html>
